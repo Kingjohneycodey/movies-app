@@ -155,11 +155,11 @@ export default function Home() {
 
       <Movies />
 
-      <footer className="bg-gray-900 text-gray-400 py-10 mt-10">
+      <footer className="bg-black text-gray-400 py-10 mt-10">
   <div className="container mx-auto px-4">
     <div className="flex flex-col md:flex-row md:justify-between">
       <div className="mb-6 md:mb-0">
-        <h2 className="text-white text-lg font-semibold">Questions? Call 1-800-123-4567</h2>
+      <h2 className="text-red-600 text-3xl lg:text-4xl font-bold">MoviesFlix</h2>
       </div>
       <div className="flex flex-col md:flex-row">
         <div className="flex flex-col mb-4 md:mb-0 md:mr-6">
@@ -183,7 +183,7 @@ export default function Home() {
       </div>
     </div>
     <div className="mt-8">
-      <p className="text-sm">© 2024 Netflix, Inc. All rights reserved.</p>
+      <p className="text-sm">© 2024 MoviesFlix, Inc. All rights reserved.</p>
     </div>
   </div>
 </footer>
