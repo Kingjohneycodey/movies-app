@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Movies from "@/components/Movies";
 
 const navigation = [
   { name: "Home", href: "#" },
@@ -11,8 +12,10 @@ const navigation = [
   { name: "Contact Us", href: "#" },
 ];
 
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
 
   return (
     <div className="bg-white">
@@ -143,30 +146,11 @@ export default function Home() {
       </div>
 
 
-
-      <div className="text-white">
-      wqqwrqwrwet
-
-<br /><br />
-w
-ewerwerwer
+      <Movies />
 
 
-<br />
-
-wqqwrqwrwet
-
-
-<br /><br />
-w
-ewerwerwer
-
-
-<br />
-
-wqqwrqwrwet
-
-      </div>
-    </div>
+     
+     
+         </div>
   );
 }
