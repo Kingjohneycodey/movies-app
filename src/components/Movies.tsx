@@ -1,6 +1,6 @@
-'use client'; // Enable client-side rendering
-
+'use client';
 import { useEffect, useState } from 'react';
+import Spinner from './ui/Spinner';
 
 interface Movie {
     id: number;
@@ -34,8 +34,10 @@ const genres = [
 export default function Movies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<number>(28); // Default genre: Action
+  const [loading, setLoading] = useState<boolean>(false); 
 
   const fetchMovies = async (genre: number) => {
+    setLoading(true);
     try {
       const response = await fetch(`/api/movies/${genre}`);
       if (!response.ok) {
@@ -45,6 +47,8 @@ export default function Movies() {
       setMovies(data.results); // Assuming the data has a "results" array
     } catch (error) {
       console.error('Error fetching movies:', error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching is complete
     }
   };
 
@@ -54,14 +58,14 @@ export default function Movies() {
 
   return (
     <div>
-      <h1 className='text-3xl text-black'>Popular Movies</h1>
+      <h1 className='text-3xl text-black text-center mt-8'>Popular Movies</h1>
    
-      <div className="overflow-x-scroll mb-4  w-[95%] mx-auto">
+      <div className="overflow-x-scroll mb-4  w-[95%] mx-auto mt-4">
         <div className="flex space-x-4 min-w-max">
           {genres.map((genre) => (
             <button
               key={genre.id}
-              className={`px-4 py-2 cursor-pointer rounded-full w-full ${selectedGenre === genre.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} whitespace-nowrap`}
+              className={`px-4 py-2 cursor-pointer rounded-full w-full ${selectedGenre === genre.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700  hover:bg-gray-300'} whitespace-nowrap`}
               onClick={() => setSelectedGenre(genre.id)}
             >
               {genre.name}
@@ -71,22 +75,31 @@ export default function Movies() {
       </div>
 
 
-       {/* Movie Cards */}
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-[95%] mx-auto">
-        {movies.filter(movie => !selectedGenre || movie.genre_ids.includes(selectedGenre)).map(movie => (
-          <div key={movie.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="w-full h-64 object-cover" />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold">{movie.title}</h2>
-              <p className="text-gray-700">{movie.overview}</p>
-              <div className="flex justify-between items-center mt-2">
-                <span className="text-yellow-500">{movie.vote_average} ★</span>
-                <span className="text-gray-500">{new Date(movie.release_date).toLocaleDateString()}</span>
+      {loading ? (
+        <div className="text-center mt-4 text-black">
+          <span className="loader"></span> {/* Add your loader styling here */}
+          {/* <p>Loading movies...</p> */}
+
+          <Spinner />
+        </div>
+      ) : (
+        /* Movie Cards */
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-[95%] mx-auto">
+          {movies.filter(movie => !selectedGenre || movie.genre_ids.includes(selectedGenre)).map(movie => (
+            <div key={movie.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="w-full h-64 object-cover" />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold">{movie.title}</h2>
+                <p className="text-gray-700">{movie.overview}</p>
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-yellow-500">{movie.vote_average} ★</span>
+                  <span className="text-gray-500">{new Date(movie.release_date).toLocaleDateString()}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

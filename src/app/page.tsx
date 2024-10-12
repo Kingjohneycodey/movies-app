@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Movies from "@/components/Movies";
@@ -16,24 +16,36 @@ const navigation = [
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Add scroll event listener to toggle header background
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   return (
     <div className="bg-white">
-      <header className="fixed left-0 inset-x-0 top-0 z-50">
+        <header className={`fixed left-0 inset-x-0 top-0 z-50 transition-colors duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
         <nav
           className="flex items-center justify-between p-6 lg:px-8"
           aria-label="Global"
         >
-          <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+              <div className="flex">
               <h2 className="text-red-600 text-3xl lg:text-4xl font-bold">MoviesFlix</h2>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </a>
-          </div>
+              </div>
+
           <div className="flex lg:hidden">
             <button
               type="button"
@@ -49,13 +61,13 @@ export default function Home() {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-semibold leading-6 text-white"
+                className={`text-sm font-semibold leading-6 ${isScrolled ? "text-black" :"text-white"}`}
               >
                 {item.name}
               </a>
             ))}
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <div className="hidden lg:flex lg:justify-end">
             <a
               href="#"
               className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
@@ -73,12 +85,8 @@ export default function Home() {
           <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <a href="#" className="-m-1.5 p-1.5">
-                <h2 className="text-red-600 text-3xl">MoviesFlix</h2>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
+                <h2 className="text-red-600 text-3xl font-bold">MoviesFlix</h2>
+             
               </a>
               <button
                 type="button"
@@ -117,7 +125,6 @@ export default function Home() {
       </header>
 
       <div className="relative isolate px-6 pt-14 lg:px-8 max-h-[100vh]">
-        {/* Remove the existing gradient */}
         <div className="absolute inset-0 z-[-1] bg-black opacity-70"></div>{" "}
         {/* Dark overlay */}
         <div
@@ -125,7 +132,7 @@ export default function Home() {
           style={{ backgroundImage: `url('/background.jpg')` }} // Add your image URL here
           aria-hidden="true"
         />
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 max-h-[92vh]">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
               Unlimited movies, TV shows, and more
@@ -147,6 +154,40 @@ export default function Home() {
 
 
       <Movies />
+
+      <footer className="bg-gray-900 text-gray-400 py-10 mt-10">
+  <div className="container mx-auto px-4">
+    <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="mb-6 md:mb-0">
+        <h2 className="text-white text-lg font-semibold">Questions? Call 1-800-123-4567</h2>
+      </div>
+      <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col mb-4 md:mb-0 md:mr-6">
+          <a href="#" className="hover:text-white">FAQ</a>
+          <a href="#" className="hover:text-white">Investor Relations</a>
+          <a href="#" className="hover:text-white">Privacy</a>
+          <a href="#" className="hover:text-white">Speed Test</a>
+        </div>
+        <div className="flex flex-col mb-4 md:mb-0 md:mr-6">
+          <a href="#" className="hover:text-white">Help Center</a>
+          <a href="#" className="hover:text-white">Jobs</a>
+          <a href="#" className="hover:text-white">Cookie Preferences</a>
+          <a href="#" className="hover:text-white">Legal Notices</a>
+        </div>
+        <div className="flex flex-col mb-4 md:mb-0">
+          <a href="#" className="hover:text-white">Account</a>
+          <a href="#" className="hover:text-white">Ways to Watch</a>
+          <a href="#" className="hover:text-white">Terms of Use</a>
+          <a href="#" className="hover:text-white">Corporate Information</a>
+        </div>
+      </div>
+    </div>
+    <div className="mt-8">
+      <p className="text-sm">© 2024 Netflix, Inc. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
 
 
      
