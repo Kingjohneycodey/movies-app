@@ -1,6 +1,8 @@
+"use client"
 import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const navigation = [
     { name: "Home", href: "#" },
@@ -43,9 +45,11 @@ const Header = () => {
       aria-label="Global"
     >
       <div className="flex">
-        <h2 className="text-red-600 text-3xl lg:text-4xl font-bold">
+       <Link href="/">
+       <h2 className="text-red-600 text-3xl lg:text-4xl font-bold">
           MoviesFlix
         </h2>
+       </Link>
       </div>
 
       <div className="flex lg:hidden">

@@ -1,13 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Spinner from '../ui/Spinner';
+import Link from 'next/link';
 
 interface Movie {
     id: number;
     title: string;
     overview: string;
     poster_path: string;
-    release_date: string;
+    release_date: string; 
     genre_ids: number[];
     vote_average: number;
   }
@@ -77,8 +78,7 @@ export default function Movies() {
 
       {loading ? (
         <div className="text-center mt-4 text-black">
-          <span className="loader"></span> {/* Add your loader styling here */}
-          {/* <p>Loading movies...</p> */}
+
 
           <Spinner />
         </div>
@@ -86,10 +86,11 @@ export default function Movies() {
         /* Movie Cards */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-[95%] mx-auto">
           {movies.filter(movie => !selectedGenre || movie.genre_ids.includes(selectedGenre)).map(movie => (
-            <div key={movie.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <Link href={`/movies/${movie.id}`} key={movie.id} >
+                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} className="w-full h-64 object-cover" />
               <div className="p-4">
-                <h2 className="text-xl font-semibold">{movie.title}</h2>
+                <h2 className="text-xl font-semibold text-red-600 mb-4">{movie.title}</h2>
                 <p className="text-gray-700">{movie.overview}</p>
                 <div className="flex justify-between items-center mt-2">
                   <span className="text-yellow-500">{movie.vote_average} ★</span>
@@ -97,6 +98,7 @@ export default function Movies() {
                 </div>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       )}
