@@ -1,7 +1,7 @@
 "use client";
 import Spinner from "@/components/ui/Spinner";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
@@ -59,6 +59,7 @@ export interface Movie {
 
 const SingleMovie = () => {
   const { id } = useParams();
+  const router = useRouter();
   console.log(id);
 
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -192,12 +193,19 @@ const SingleMovie = () => {
                 )}
 
 <div>
-<Link
+{/* <Link
                     href="/"
                     className="bg-red-600 text-white px-4 py-2 rounded mt-4 hover:bg-red-700 inline-flex items-center"
                   >
                     <BiArrowBack/> Back to Home
-                  </Link>
+                  </Link> */}
+
+<button
+      onClick={() => router.back()} // Navigate to the previous page
+      className="bg-red-600 text-white px-4 py-2 rounded mt-4 hover:bg-red-700 inline-flex items-center"
+    >
+      <BiArrowBack /> Back to Previous Page
+    </button>
 </div>
 
               </div>
