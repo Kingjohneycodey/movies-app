@@ -3,7 +3,7 @@
 import Spinner from "@/components/ui/Spinner";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 interface Movie {
@@ -118,4 +118,12 @@ const SearchResultsPage = () => {
   );
 };
 
-export default SearchResultsPage;
+const SearchPage = () => {
+    return (
+      <Suspense fallback={<div>Loading search results...</div>}>
+        <SearchResultsPage />
+      </Suspense>
+    );
+  };
+  
+  export default SearchPage;

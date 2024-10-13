@@ -1,12 +1,9 @@
 "use client";
 import Spinner from "@/components/ui/Spinner";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { FaBackward } from "react-icons/fa";
-import { FaBackwardStep } from "react-icons/fa6";
 
 interface Genre {
   id: number;
@@ -60,7 +57,7 @@ export interface Movie {
   vote_count: number;
 }
 
-const page = () => {
+const SingleMovie = () => {
   const { id } = useParams();
   console.log(id);
 
@@ -123,7 +120,7 @@ const page = () => {
                 <h1 className="text-4xl font-bold">{movie.title}</h1>
                 {movie.tagline && (
                   <h2 className="text-xl italic text-gray-600">
-                    "{movie.tagline}"
+                    &quot;{movie.tagline}&quot;
                   </h2>
                 )}
 
@@ -219,4 +216,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SingleMovie;
