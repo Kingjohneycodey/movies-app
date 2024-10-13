@@ -1,5 +1,5 @@
 "use client";
-import Movies from "@/components/Movies";
+import Movies from "@/components/Home/Movies";
 import Footer from "@/components/Home/Footer";
 import Header from "@/components/Home/Header";
 import HeroSection from "@/components/Home/HeroSection";

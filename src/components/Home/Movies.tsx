@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Spinner from './ui/Spinner';
+import Spinner from '../ui/Spinner';
 
 interface Movie {
     id: number;
@@ -65,7 +65,7 @@ export default function Movies() {
           {genres.map((genre) => (
             <button
               key={genre.id}
-              className={`px-4 py-2 cursor-pointer rounded-full w-full ${selectedGenre === genre.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700  hover:bg-gray-300'} whitespace-nowrap`}
+              className={`px-4 py-2 cursor-pointer rounded-full w-full ${selectedGenre === genre.id ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-700  hover:bg-gray-300'} whitespace-nowrap`}
               onClick={() => setSelectedGenre(genre.id)}
             >
               {genre.name}
